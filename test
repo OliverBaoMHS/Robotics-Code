@@ -1,0 +1,33 @@
+#include <Pixy2.h>
+
+Pixy2 pixy;
+#define BAUD_RATE 115200
+#define BYTE_MAX 255
+float Cwidth = 20; //width of the claw without width of protruding bits
+
+
+
+void setup()
+{
+  Serial.begin(BAUD_RATE);
+  Serial.print("Starting...\n");
+  pixy.init();
+}
+  
+void loop()
+{
+  int i;
+  pixy.ccc.getBlocks();
+  if (pixy.ccc.numBlocks)
+  {
+    Serial.println("Detected");
+    for (i=0; i<pixy.ccc.numBlocks; i++)
+    {
+      Serial.print("  block "); 
+      Serial.print(i);
+      Serial.print(": ");
+      Serial.print(pixy.ccc.blocks[i].x);
+    }
+  }
+
+}
